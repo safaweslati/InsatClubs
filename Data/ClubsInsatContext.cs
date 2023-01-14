@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using InsatClub.Models;
 using Microsoft.EntityFrameworkCore;
+using InsatClub.Models;
 
 namespace InsatClub.Data;
 
@@ -11,7 +11,7 @@ public partial class ClubsInsatContext : DbContext
     {
     }
 
-    public ClubsInsatContext(DbContextOptions<DbContext> options)
+    public ClubsInsatContext(DbContextOptions<ClubsInsatContext> options)
         : base(options)
     {
     }
@@ -40,13 +40,32 @@ public partial class ClubsInsatContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Administrateur>(entity =>
+        {
+            entity.ToTable("Administrateur");
+
+            entity.Property(e => e.ClubId).HasColumnName("club_id");
+            entity.Property(e => e.MotDePasse).HasColumnName("Mot_de_Passe");
+
+            entity.HasOne(d => d.Club).WithMany(p => p.Administrateurs).HasForeignKey(d => d.ClubId);
+        });
+
         modelBuilder.Entity<Administration>(entity =>
         {
+            entity.ToTable("Administration");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.MotDePasse).HasColumnName("Mot_de_Passe");
         });
 
         modelBuilder.Entity<Club>(entity =>
         {
+            entity.ToTable("Club");
+
+            entity.HasIndex(e => e.Id, "IX_Club_Id").IsUnique();
+
+            entity.Property(e => e.Url).HasColumnName("URL");
+
             entity.HasMany(d => d.IdEtudiants).WithMany(p => p.IdClubs)
                 .UsingEntity<Dictionary<string, object>>(
                     "ClubMember",
@@ -65,7 +84,70 @@ public partial class ClubsInsatContext : DbContext
 
         modelBuilder.Entity<Etudiant>(entity =>
         {
+            entity.ToTable("Etudiant");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.MotDePasse).HasColumnName("Mot_de_Passe");
+            entity.Property(e => e.NumTel).HasColumnName("Num_tel");
+        });
+
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.ToTable("Event");
+
+            entity.HasIndex(e => e.Id, "IX_Event_Id").IsUnique();
+
+            entity.Property(e => e.Img).HasColumnName("img");
+
+            entity.HasOne(d => d.Club).WithMany(p => p.Events).HasForeignKey(d => d.ClubId);
+        });
+
+        modelBuilder.Entity<NotifsAdministrateurFromAdministration>(entity =>
+        {
+            entity.ToTable("NotifsAdministrateur_from_Administration");
+
+            entity.Property(e => e.AdministrateurId).HasColumnName("Administrateur_id");
+            entity.Property(e => e.AdministrationId).HasColumnName("Administration_id");
+
+            entity.HasOne(d => d.Administrateur).WithMany(p => p.NotifsAdministrateurFromAdministrations).HasForeignKey(d => d.AdministrateurId);
+
+            entity.HasOne(d => d.Administration).WithMany(p => p.NotifsAdministrateurFromAdministrations).HasForeignKey(d => d.AdministrationId);
+        });
+
+        modelBuilder.Entity<NotifsAdministrateurFromEtudiant>(entity =>
+        {
+            entity.ToTable("NotifsAdministrateur_from_Etudiant");
+
+            entity.Property(e => e.AdministrateurId).HasColumnName("Administrateur_id");
+            entity.Property(e => e.EtudiantId).HasColumnName("Etudiant_id");
+
+            entity.HasOne(d => d.Administrateur).WithMany(p => p.NotifsAdministrateurFromEtudiants).HasForeignKey(d => d.AdministrateurId);
+
+            entity.HasOne(d => d.Etudiant).WithMany(p => p.NotifsAdministrateurFromEtudiants).HasForeignKey(d => d.EtudiantId);
+        });
+
+        modelBuilder.Entity<NotifsAdministration>(entity =>
+        {
+            entity.ToTable("NotifsAdministration");
+
+            entity.Property(e => e.AdministrateurId).HasColumnName("Administrateur_id");
+            entity.Property(e => e.AdministrationId).HasColumnName("Administration_id");
+
+            entity.HasOne(d => d.Administrateur).WithMany(p => p.NotifsAdministrations).HasForeignKey(d => d.AdministrateurId);
+
+            entity.HasOne(d => d.Administration).WithMany(p => p.NotifsAdministrations).HasForeignKey(d => d.AdministrationId);
+        });
+
+        modelBuilder.Entity<NotifsEtudiant>(entity =>
+        {
+            entity.ToTable("NotifsEtudiant");
+
+            entity.Property(e => e.AdministrateurId).HasColumnName("Administrateur_id");
+            entity.Property(e => e.EtudiantId).HasColumnName("Etudiant_id");
+
+            entity.HasOne(d => d.Administrateur).WithMany(p => p.NotifsEtudiants).HasForeignKey(d => d.AdministrateurId);
+
+            entity.HasOne(d => d.Etudiant).WithMany(p => p.NotifsEtudiants).HasForeignKey(d => d.EtudiantId);
         });
 
         OnModelCreatingPartial(modelBuilder);

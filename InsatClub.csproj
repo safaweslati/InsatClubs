@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="Controllers\NewFile.txt" />
     <None Remove="Data\NewFile.txt" />
+    <None Remove="Data\Unit" />
+    <None Remove="Views\Shared\NewFile.txt" />
     <None Remove="Views\Students\NewFile.txt" />
   </ItemGroup>
 

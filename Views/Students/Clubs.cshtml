@@ -1,14 +1,22 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Clubs";
-
-}
+     Layout = "~/Views/Shared/StudentLayout.cshtml";
+    ViewBag.Title = "Clubs";
+    }
 @model InsatClub.Data.ClubsInsatContext ;
 
 
-<h1>@ViewData["Title"]</h1>
+<h1>Clubs</h1>
 
-@foreach(var club in Model.Clubs)
+
+<main id="main">
+
+    <div class="breadcrumbs" data-aos="fade-in">
+        <div class="container">
+            <h2> Events</h2>
+        </div>
+    </div>
+
+   @foreach(var club in Model.Clubs)
 {
 <section>
     <div class="container px-5">
@@ -22,9 +30,10 @@
                     <p>@club.Description</p>
                 </div>
                 <div class="p-5">
-                      <!-- <a asp-controller="Insat" asp-action="JoinClub"><button type="button" class="btn btn-danger">
+                      <a asp-controller="Student" asp-action="JoinClub" asp-route-id=1 >
+                          <button type="button" class="btn btn-danger">
                             Join
-                        </button></a>-->
+                        </button> </a>
                     <a href="@club.Url"><button type="button" class="btn btn-info">Follow</button></a>
                 </div>
 
@@ -33,4 +42,4 @@
     </div>
 </section>
 }
-
+</main>

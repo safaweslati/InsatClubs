@@ -1,0 +1,32 @@
+﻿@{
+     Layout = "~/Views/Shared/StudentLayout.cshtml";
+    ViewBag.Title = "Notifications";
+    }
+
+@model InsatClub.Models.Etudiant ;
+
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    <main role="main" class="pb-3">
+     <div class="container" style="margin-top: 10%">
+         <main id="main">
+             <section id="events" class="events">
+            <div class="cot    ainer" data-aos=fade-up">
+             <div class="row"       >
+                            @foreach(var  e in Model.NotifsEtudiants){
+                       <div cla ss="col-md-6 d-flex align-items-stretch">
+                       <div class="card">   
+                        <div  class="card-body">
+                                    <h5 class="card-title">@e.Titre</h5>
+                            <p class="fst-italic text-center"></p>
+                                    <p class="card-text">@e.Contenu</p>
+                                </div>
+                            </div>
+                        </div> 
+                        }
+     </div>
+        </div>
+
+    </section>
+</main>
+</div>

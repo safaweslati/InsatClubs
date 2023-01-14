@@ -1,0 +1,43 @@
+﻿@model InsatClub.Models.Etudiant
+
+
+<div class="container">
+
+
+@using (Html.BeginForm("Sign_up", "Home", FormMethod.Post , new { @style = "margin-top: 6%" }))
+{
+   
+    <h2 class="form-title">Sign up</h2>
+    
+    <label>Nom</label>
+    <br>
+    @Html.TextBoxFor(model => model.Nom, new{ @class = "form-control", @placeholder="Enter your last name"})
+   
+    <br />
+   
+    <label>Prenom</label>
+    <br>
+    @Html.TextBoxFor(model => model.Prenom, new{ @class = "form-control", @placeholder="Enter your first name"})
+   
+    <br>
+
+    <label>Numero de telephone</label>
+    <br>
+    @Html.TextBoxFor(model => model.NumTel, new{ @class = "form-control", @placeholder="Enter your phone number"}) 
+
+    <br>
+
+    <label>Email</label>
+    <br>
+    @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @placeholder="Enter your Email"})
+    
+    <br>
+
+    <label>Mot de passe</label>
+    <br>
+    @Html.PasswordFor(model => model.MotDePasse, new { @class = "form-control", placeholder = "Enter password" })
+   
+    <br />
+    <button type="submit" class="btn btn-primary">Sign up</button>
+}
+</div>
