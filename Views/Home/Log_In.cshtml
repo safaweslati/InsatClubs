@@ -1,0 +1,19 @@
+﻿@model Insat.Models.Etudiant
+
+@{
+}
+@using (Html.BeginForm("JoinClub", "Insat", FormMethod.Post, new { @style = "margin-top: 6%" }))
+{
+    <h1 style="margin-left: 40%">@ViewBag.club.Name</h1>
+    <h2 class="form-title">Join Us</h2>
+    <label>Email</label>
+    <br />
+    @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @placeholder="Enter your Email"})
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+
+    <label>Mot de passe</label>
+    <br />
+    @Html.TextBoxFor(model => model.MotdePasse, new{ @class = "form-control", @placeholder="Enter your password"})
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+}

@@ -1,0 +1,67 @@
+﻿@{    
+    ViewData["Title"] = "Clubs";
+
+}
+@model InsatClub.Data.ClubsInsatContext ;
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2X_PlnQ-Db6RdO33aU0UBO-aiUU3K6hRPivxxg0KpEg&s" style="width:50px;height: 50px" />
+            <a class="navbar-brand" asp-area="" asp-controller="Insat" asp-action="Index" style="padding-left: 2%">Insat</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" style="margin-left:70%;">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item" style="margin-right: 20%">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Insat" asp-action="Clubs">Clubs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Insat" asp-action="Events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Insat" asp-action="Log_In">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Insat" asp-action="Inscri">S'inscrire'</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3">
+     <main class="container" style="margin-top: 10%">
+
+
+<h1>@ViewData["Title"]</h1>
+
+@foreach(var club in Model.Clubs)
+{
+<section>
+    <div class="container px-5">
+        <div class="row gx-5 align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5"><img class="img-fluid rounded-circle"  src="@club.Image"  /></div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4"><b>@club.Nom</b></h2>
+                    <p>@club.Description</p>
+                </div>
+                <div class="p-5">
+                      <!-- <a asp-controller="Insat" asp-action="JoinClub"><button type="button" class="btn btn-danger">
+                            Join
+                        </button></a>-->
+                    <a href="@club.Url"><button type="button" class="btn btn-info">Follow</button></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+}
+</main>
+</div>
