@@ -1,0 +1,26 @@
+﻿
+@model InsatClub.Models.Event
+
+@using (Html.BeginForm("Edit_Event", "Administrateur" , FormMethod.Post, new { @style = "margin-top: 6%" }))
+{
+
+        <h2 class="form-title">@ViewData["title"] Event</h2>
+
+        <label>Nom</label>
+        <br>
+    @Html.TextBoxFor(model => model.Nom , new{ @class = "form-control"})
+
+        <br>
+        <label>Description</label>
+        <br>
+    @Html.TextBoxFor(model => model.Description , new { @class = "form-control" })
+
+        <br />
+    <label>Image</label>
+    <br>
+    @Html.TextBoxFor(model => model.Img , new { @class = "form-control" })
+    
+    <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+}
+</div>

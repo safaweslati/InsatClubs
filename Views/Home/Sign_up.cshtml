@@ -3,10 +3,17 @@
 
 <div class="container">
 
+    @if (ViewData["Data"] == "vrai")
+    {
+        <ul>
+            <li class="list-group-item list-group-item-danger">Error</li>
+        </ul>
+    }
 
-@using (Html.BeginForm("Sign_up", "Home", FormMethod.Post , new { @style = "margin-top: 6%" }))
+
+    @using (Html.BeginForm("Sign_up", "Home", FormMethod.Post , new { @style = "margin-top: 6%" }))
 {
-   
+        
     <h2 class="form-title">Sign up</h2>
     
     <label>Nom</label>

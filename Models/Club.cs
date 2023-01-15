@@ -17,7 +17,7 @@ public partial class Club
 
     public virtual ICollection<Administrateur> Administrateurs { get; } = new List<Administrateur>();
 
-    public virtual ICollection<Event> Events { get; } = new List<Event>();
+    public  ICollection<Event> Events { get; } = new List<Event>();
 
     public virtual ICollection<Etudiant> IdEtudiants { get; } = new List<Etudiant>();
 }

@@ -5,6 +5,7 @@ namespace InsatClub.Models;
 
 public partial class NotifsAdministrateurFromEtudiant
 {
+    
     public long Id { get; set; }
 
     public long? AdministrateurId { get; set; }

@@ -1,33 +1,57 @@
-﻿@model InsatClub.Models.Club
+﻿@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
 
-<div>
-<main id="main">
-     <div class="breadcrumbs" data-aos="fade-in">
-        <div class="container">
-            <h2>Events</h2>
-        </div>
-    </div> 
+@model List<InsatClub.Models.Event>
+
+@if (ViewData["event"] == "ok")
+{
+    <ul>
+        <li class = "list-group-item list-group-item-success" > Evenement ajouté avec succés ! </li>
+    </ul>
+}
+@if (ViewData["delete"] == "ok")
+{
+    <ul>
+        <li class="list-group-item list-group-item-success">Evenement supprimé avec succés ! </li>
+    </ul>
+}
+@if (ViewData["update"] == "ok")
+{
+    <ul>
+        <li class="list-group-item list-group-item-success">Evenement mis à jour effectué avec succés ! </li>
+    </ul>
+}
+
+
+
     <section id="events" class="events">
         <div class="container" data-aos="fade-up">
             <div class="row">
-                @foreach(var e in Model.Events){
-                <div class="col-md-6 d-flex align-items-stretch">
+                 @foreach(var e in Model){
+                 <div class="col-md-6 d-flex align-items-stretch">
                         <div class="card">
                         <div class="card-img">
                                 <img class="card-img" src=@e.Img>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">@e.Nom</h5>
-                            <p class="fst-italic text-center">Organized By : @Model.Clubs.Find(e.ClubId).Nom</p>
                             <p class="card-text">@e.Description</p>
                         </div>
+                         <div class="p-5">
+                       @*Html.RouteLink("Link Text", new { controller = "ControllerName", action = "ActionName", id = 1 })*@
+                        <button type="button" class="btn btn-secondary">@Html.ActionLink("Edit Event", "Edit_Event","Administrateur",new { id = @e.Id },new { style = "color: white; text-decoration: none;" })</button>
+                        <button type="button" class="btn btn-danger">@Html.ActionLink("Delete Event","Delete_Event" , "Administrateur", new { id = @e.Id },new { style = "color: white; text-decoration: none;" })</button>
+
                     </div>
+                    
+                    </div>
+                    
                 </div> 
                
                 }
             </div>
+
         </div>
 
     </section>
-</main>
-</div>

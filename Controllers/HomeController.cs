@@ -9,6 +9,7 @@ namespace InsatClub.Controllers
 {
     public class HomeController : Controller
     {
+        public int x = 300;
         public ClubsInsatContext context = new ClubsInsatContext();
 
         private readonly ILogger<HomeController> _logger;
@@ -37,27 +38,32 @@ namespace InsatClub.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult SignUp(Etudiant model)
+        public ActionResult Sign_up(Etudiant etd)
         {
             if (ModelState.IsValid)
             {
-                context.Etudiants.Add(model);
+                etd.Id = x;
+                context.Etudiants.Add(etd);
                 context.SaveChanges();
-                HttpContext.Session.SetString("EtudiantId", model.Id.ToString());
+                HttpContext.Session.SetString("EtudiantId", etd.Id.ToString());
+                x++;
                 return RedirectToAction("Clubs", "Students");
             }
             else
             {
-                return View(model);
-            }
+                ViewData["Data"] = "vrai";
+
+                return View(etd);
+          }
+              
         }
-        public IActionResult Log_In()
+        public IActionResult Log_In_Etud()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Log_In(Etudiant etd)
+        public IActionResult Log_In_Etud(Etudiant etd)
         {
             if (etd.Email == null || etd.MotDePasse == null)
             {
@@ -66,31 +72,62 @@ namespace InsatClub.Controllers
             }
             else
             {
-                var e = context.Etudiants.Where(e => ((e.Email==etd.Email) && (e.MotDePasse==etd.MotDePasse)));
-                if (e == null)
+                var e = context.Etudiants.Where(e => e.Email==etd.Email && e.MotDePasse == etd.MotDePasse);
+                if (e.SingleOrDefault() == null)
                 {
-                    var e1 = context.Administrateurs.Where(e => ((e.Email == etd.Email) && (e.MotDePasse == etd.MotDePasse)));
-                    if (e1 == null)
-                    {
+                   
                         ViewData["NoAcc"] = "vrai";
                         return View(etd);
-                    }
-                   else
-                    {
-                        HttpContext.Session.SetString("AdminId", etd.Id.ToString());
-                        return RedirectToAction("Index", "Administrateur");
-                    }
+                    
                 }
                 else
                 {
-
                     HttpContext.Session.SetString("EtudiantId", etd.Id.ToString());
-                    return RedirectToAction("Notifications", "Students");
+                    return RedirectToAction("Event", "Students");
 
                 }
 
             }
 
+        }
+        public IActionResult Log_In_Admin()
+        {
+            return View();
+        }
+
+        [HttpPost] 
+        public IActionResult Log_In_Admin(Administrateur admin)
+        {
+            if (admin.Email == null || admin.MotDePasse == null)
+            {
+                ViewData["NoData"] = "vrai";
+                return View(admin);
+            }
+            else
+            {
+                var e = context.Administrateurs.Where(e => e.Email == admin.Email && e.MotDePasse == admin.MotDePasse);
+                if (e.SingleOrDefault() == null)
+                {
+
+                    ViewData["NoAcc"] = "vrai";
+                    return View(admin);
+
+                }
+                else
+                {
+                    HttpContext.Session.SetString("AdminId", e.First().Id.ToString());
+                    return RedirectToAction("Index", "Administrateur");
+
+                }
+
+            }
+
+        }
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.SetString("EtudiantId", "");
+            HttpContext.Session.SetString("AdminId", "");
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

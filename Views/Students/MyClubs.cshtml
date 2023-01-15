@@ -2,32 +2,36 @@
      Layout = "~/Views/Shared/StudentLayout.cshtml";
     ViewBag.Title = "My Clubs";
     }
-@model IEnumerable<long> 
-<h1>@ViewData["Title"]</h1>
- @foreach(long id in Model)
-{
-<section>
-    @{
-        club=
-    }
-    <div class="container px-5">
-        <div class="row gx-5 align-items-center">
-            <div class="col-lg-6 order-lg-2">
-                <div class="p-5"><img class="img-fluid rounded-circle"  src="@club.Image"  /></div>
-            </div>
-            <div class="col-lg-6 order-lg-1">
-                <div class="p-5">
-                    <h2 class="display-4"><b>@club.Nom</b></h2>
-                    <p>@club.Description</p>
-                </div>
-                <div class="p-5">
-                      
-                    <a href="@club.Url"><button type="button" class="btn btn-info">Detail</button></a>
-                </div>
 
-            </div>
-        </div>
-    </div>
-</section>
+@model ICollection<Club>
+<h1>@ViewData["Title"]</h1>
+@{
+    if(Model == null || Model.Count== 0)
+                                 {
+                                  <h2>You are not part of any club :( we encourage you to join! </h2>
+                                 }
+    foreach (var club in Model)
+        {
+            <section>
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-lg-6 order-lg-2">
+                            <div class="p-5"><img class="img-fluid rounded-circle" src="@club.Image" /></div>
+                        </div>
+                        <div class="col-lg-6 order-lg-1">
+                            <div class="p-5">
+                                <h2 class="display-4"><b>@club.Nom</b></h2>
+                                <p>@club.Description</p>
+                            </div>
+                            <div class="p-5">
+                       
+                                <a href="@club.Url"><button type="button" class="btn btn-info">details</button></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
 }
 </main>

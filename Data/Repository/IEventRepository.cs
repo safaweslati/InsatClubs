@@ -6,8 +6,10 @@ namespace InsatClub.Data.Repository
     public interface IEventRepository : IRepository<Event>
     {
         
-            IEnumerable<Event> GetAllEventsForClub();
+            Club FindClub(int id);   
+            IEnumerable<Event> GetAllEventsForClub(int id);
             void Update(int id,Event e);
+            void save();
         }
     
 }

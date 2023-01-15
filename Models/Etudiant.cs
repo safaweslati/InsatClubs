@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsatClub.Models;
 
@@ -10,7 +12,8 @@ public partial class Etudiant
     public string? Prenom { get; set; }
 
     public string? Email { get; set; }
-
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public long Id { get; set; }
 
     public long? NumTel { get; set; }

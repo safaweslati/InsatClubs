@@ -1,0 +1,36 @@
+﻿@model InsatClub.Models.Administrateur
+
+
+<div class="container">
+
+    @if (ViewData["NoData"] == "vrai")
+    {
+        <ul>
+            <li class="list-group-item list-group-item-danger">All fields are required</li>
+        </ul>
+    }
+    @if (ViewData["NoAcc"] == "vrai")
+    {
+        <ul>
+            <li class="list-group-item list-group-item-danger">You don't have an account ! Please create one first</li>
+        </ul>
+    }
+    @using (Html.BeginForm("Log_In_Admin", "Home", FormMethod.Post, new { @style = "margin-top: 6%" }))
+    {
+
+        <h2 class="form-title">Log In</h2>
+
+        <label>Email</label>
+        <br>
+        @Html.TextBoxFor(model => model.Email, new{ @class = "form-control", @placeholder="Enter your Email"})
+
+        <br>
+        <label>Mot de passe</label>
+        <br>
+        @Html.PasswordFor(model => model.MotDePasse, new { @class = "form-control", placeholder = "Enter password" })
+
+        <br />
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    }
+</div>

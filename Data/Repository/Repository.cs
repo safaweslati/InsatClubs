@@ -14,7 +14,7 @@ namespace InsatClub.Data.Repository
 
         public TEntity? Get(int id)
         {
-            return _Context.Set<TEntity>().Find(id);
+            return _Context.Set<TEntity>().Find((long)id);
         }
         public IEnumerable<TEntity> GetAll()
         {
